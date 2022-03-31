@@ -9,12 +9,22 @@
         >
       </div>
 
+
+     <div class="mt-2 d-flex flex-colum">
+        <button 
+         @click="$router.push({ name: 'entry' , params: {id: 'new'}})"
+        class="btn btn-primary btn-sm">
+            <i class="fa fa-plus-circle"></i>
+            Nueva Entrada
+        </button>
+     </div>
+
       <div class="entry-scrollarea">
        <EntryComp
          v-for="entry in entriesByTerm"
          :key="entry.id"
          :entry="entry">
-            Entry
+         
        </EntryComp>
                     
       </div>
