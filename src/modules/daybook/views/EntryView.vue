@@ -11,7 +11,11 @@
              </div>
      
              <div>
-                 <button class="btn btn-danger mx-2">Borrar <i class="fa fa-trash-alt"></i></button>
+                 <button 
+                   v-if="entry.id"
+                   class="btn btn-danger mx-2"
+                   @click="deleteEntry"
+                 >Borrar <i class="fa fa-trash-alt"></i></button>
                  <button class="btn btn-primary"> Subir Foto <i class="fa fa-upload"></i></button>
              </div>
      
@@ -49,6 +53,7 @@
 <script>
 import { defineAsyncComponent } from 'vue'
 import { mapGetters, mapActions } from 'vuex'
+import Swall from 'sweetalert2'
 import  getDayMonthYear from '../helpers/getDayMonthYear'
 
 export default {
@@ -84,7 +89,7 @@ export default {
         }
     },
     methods: {
-         ...mapActions('journal', ['updateEntry']),
+         ...mapActions('journal', ['updateEntry','createEntry', 'delEntry']),
          loadEntry(){
 
                let entry
@@ -109,11 +114,25 @@ export default {
          },
          async saveEntry(){
 
+
+            
             if ( this.entry.id ){
                 this.updateEntry( this.entry )
             }else{
-               console.log( 'nuevene' )
+               
+                // crear una nueva entrada (se manda llamar desde actions de vuex )
+                const id = await this.createEntry( this.entry )
+
+                this.$router.push({name: 'entry', params: {id} })
+
             }
+         },
+
+         async deleteEntry(){
+
+            await this.delEntry( this.entry.id )
+
+            this.$router.push({name : 'no-entry' })
          }
     },
     created(){
