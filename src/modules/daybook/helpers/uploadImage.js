@@ -13,13 +13,13 @@ import axios from 'axios'
           const url = 'https://api.cloudinary.com/v1_1/dmgo2a5ug/image/upload'
           
           const  { data } = await axios.post(url, formData)
-              console.log(data);
+              
           return data.secure_url
           
 
     } catch (error) {
          console.log('Error al cargar la imagen')
-         console.error(error)
+        //  console.error(error)
     }
 
 } 
